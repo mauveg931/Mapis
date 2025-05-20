@@ -1,3 +1,19 @@
+const markers = [
+    { name: "church", icon: 'img/church.png'},
+    { name: "airpark", icon: 'img/airpark.png'},
+    { name: "airport", icon: 'img/airport.png'},
+    { name: "castle", icon: 'img/castle.png'},
+    { name: "chicken", icon: 'img/chicken.png'},
+    { name: "estatua", icon: 'img/estatua.png'},
+    { name: "hospital", icon: 'img/hospital.png'},
+    { name: "mall", icon: 'img/mall.png'},
+    { name: "mirador", icon: 'img/mirador.png'},
+    { name: "museum", icon: 'img/museum.png'},
+    { name: "palace", icon: 'img/palace.png'},
+    { name: "park", icon: 'img/park.png'},
+    { name: "restaurant", icon: 'img/restaurant.png'},
+    { name: "walkingtour", icon: 'img/walkingtour.png'},
+];
 
 const leon = [
     { name: "Catedral", lat: 42.5994603360669, lng: -5.5671718763307085 },
