@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/x-icon" href="img/favicono.png">
+
+    <title>Mapis</title>
+</head>
+<body>
+    
+    <select class="selector" id="selectorCiudad">
+        <option value="0" selected disabled>Seleccione una localización</option>
+        <option value="1">León</option>
+        <option value="2">Toro</option>
+        <option value="3">San Petersburgo</option>
+        <option value="4">Nashville</option>
+        <option value="5">Vigo</option>
+    </select>
+
+    <div id="map"></div>
+    
+<script async
+ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRK6MM-HR0JEwBe7tOkFhek6XGcxsg3QE&callback=initMap">
+</script>
+
+<script src="js/script.js" async></script>
+
+</body>
+</html>
