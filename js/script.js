@@ -46,10 +46,8 @@ const ciudades = [
 
 const selector = document.getElementById("selectorCiudad");
 
-function initMap(ciudad) {
-    let map = creaMapa(ciudad);
-
-    addMarker(ciudad, map);
+function initMap() {
+    let map = creaMapa(ciudades[0]);
 }
 
 document.addEventListener("DOMContentLoaded",creaMapa(ciudades[0]));
@@ -72,7 +70,6 @@ function creaMapa(sitio) {
 }
 
 selector.addEventListener("change",function(){
-    //initMap(ciudades[selector.value]);
     let ciudad = ciudades[selector.value];
     let mapa = creaMapa(ciudad);
 
