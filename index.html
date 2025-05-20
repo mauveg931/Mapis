@@ -9,7 +9,7 @@
     <title>Mapis</title>
 </head>
 <body>
-    <select class="selector" id="selectorCiudad" onchange="initMap()">
+    <select class="selector" id="selectorCiudad" onchange="initMap(ciudades[this.value])">
         <option value="0" selected disabled>Seleccione una localización</option>
         <option value="1">León</option>
         <option value="2">Toro</option>
