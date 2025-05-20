@@ -9,10 +9,19 @@
     <title>Mapis</title>
 </head>
 <body>
+    <select class="selector" id="selectorCiudad" onchange="initMap()">
+        <option value="0" selected disabled>Seleccione una localización</option>
+        <option value="1">León</option>
+        <option value="2">Toro</option>
+        <option value="3">Guarromán</option>
+        <option value="4">Córdoba</option>
+        <option value="5">Cádiz</option>
+        <option value="6">Tennessee</option>
+        <option value="7">Vigo</option>
+        <option value="8">Kabukicho (歌舞伎町)</option>
+    </select>
     <div id="map" class="container-fluid"></div>
     
-
-
 <script async
  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRK6MM-HR0JEwBe7tOkFhek6XGcxsg3QE&callback=initMap">
 </script>
