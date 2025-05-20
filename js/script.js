@@ -13,32 +13,26 @@ const ciudades = [
 const select = document.getElementById("selector");
 
 function initMap(ciudad) {
-    let map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: ciudad.lat, lng: ciudad.lng },
-        zoom: 6.5,
-    });
+    let map = creaMapa(ciudad);
 
-    let latLng = new google.maps.LatLng(ciudad.lat, ciudad.lng);
+    addMarker(ciudad, map);
+}
+
+document.addEventListener("DOMContentLoaded",creaMapa(ciudades[0]));
+
+
+function addMarker(sitio, map) {
+    let latLng = new google.maps.LatLng(sitio.lat, sitio.lng);
     let marker = new google.maps.Marker({
         position: latLng,
-        title: ciudad.name,
+        title: sitio.name,
         map: map,
     });
 }
 
-function centradoInicial(){
-
-     let map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 40, lng: -4 },
+function creaMapa(sitio) {
+    return map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: sitio.lat, lng: sitio.lng },
         zoom: 6.5,
     });
-
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-    centradoInicial();
-});
-initMap(ciudades[0]);
-
-
-
