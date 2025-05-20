@@ -4,7 +4,7 @@ const ciudades = [
     { name: "Toro", lat: 41.52279239477677, lng: -5.3930411014960375 },
     { name: "San Petersburgo", lat: 59.936765618998884, lng: 30.35364971061799 },
     { name: "Nashville", lat: 36.16336090305764, lng: -86.78720688633328 },
-    { name: "Vigo", lat: 41.6488, lng: -0.8891 },
+    { name: "Vigo", lat: 42.24224453558687, lng: -8.720965458927786 },
 ];
 
 const leon = [
