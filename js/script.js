@@ -36,11 +36,11 @@ const vigo = [
 
 const ciudades = [
     { name: "Por defecto", lat: 40, lng: -4, zoom: 6.5},
-    { name: "León", lat: 42.61777, lng: -5.61969, zoom: 15, sitios: leon},
-    { name: "Toro", lat: 41.52279239477677, lng: -5.3930411014960375, zoom: 1, sitios: toro},
-    { name: "San Petersburgo", lat: 59.936765618998884, lng: 30.35364971061799, zoom: 1, sitios: sanpetersburgo},
-    { name: "Nashville", lat: 36.16336090305764, lng: -86.78720688633328, zoom: 1, sitios: nashville},
-    { name: "Vigo", lat: 42.24224453558687, lng: -8.720965458927786, zoom: 1, sitios: vigo},
+    { name: "León", lat: 42.59880223930111, lng: -5.572670787573717, zoom: 12.5, sitios: leon},
+    { name: "Toro", lat: 41.52279239477677, lng: -5.3930411014960375, zoom: 13.5, sitios: toro},
+    { name: "San Petersburgo", lat: 59.936765618998884, lng: 30.35364971061799, zoom: 10, sitios: sanpetersburgo},
+    { name: "Nashville", lat: 36.16336090305764, lng: -86.78720688633328, zoom: 12, sitios: nashville},
+    { name: "Vigo", lat: 42.24224453558687, lng: -8.720965458927786, zoom: 13, sitios: vigo},
 ];
 
 
