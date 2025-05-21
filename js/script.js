@@ -64,7 +64,7 @@ const selector = document.getElementById("selectorCiudad");
 const btnLimpiar = document.getElementById("btnLimpiar");
 
 var mapaActual;
-const marcadores = [];
+var marcadores = [];
 
 function initMap() {
     cambiaMapa(ciudades[0]);
@@ -79,6 +79,7 @@ document.addEventListener("keydown", async function (event) {
 
 btnLimpiar.addEventListener("click", () => {
     limpiarMarcadores();
+    actualizaListaMarcadores();
 });
 
 
@@ -88,12 +89,13 @@ function addMarker(sitio) {
         position: latLng,
         title: sitio.name,
         map: mapaActual,
+        cat: document.getElementById("selectorCategoria").value,
     });
     marcadores.push(marker);
 }
 
-function limpiarMarcadores(){
-    for(let marcador of marcadores){
+function limpiarMarcadores() {
+    for (let marcador of marcadores) {
         marcador.setMap(null);
     }
     marcadores = [];
@@ -154,6 +156,35 @@ async function ponMarcadorDireccion() {
 
     }
 
+    actualizaListaMarcadores();
+}
+
+function actualizaListaMarcadores() {
+    const lista = document.getElementById("lista");
+
+    lista.innerHTML ="";
+
+    const tabla = document.createElement("table");
+
+    for (let marcador of marcadores) {
+        const tr = document.createElement("tr");
+        const colCat = document.createElement("td");
+        const colNombre = document.createElement("td");
+        const imgCat = document.createElement("img");
+        imgCat.setAttribute("src", markers[marcador.cat].icon);
+
+        colCat.appendChild(imgCat);
+        colNombre.innerHTML = marcador.title;
+
+        tr.appendChild(colCat);
+        tr.appendChild(colNombre);
+
+        tabla.appendChild(tr);
+
+    }
+
+
+    lista.appendChild(tabla);
 
 }
 
