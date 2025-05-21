@@ -27,14 +27,42 @@ background-color: rgb(120, 213, 233);
  display: block;
   padding: 10px;
   width: 100%;
+  height: 30px;
   max-width: 260px;
   margin: 20px auto;
   border: 1px solid #ccc;
   border-radius: 4px;
   text-align: left;
-  background-color: #fff;
+  background-color: #ffffff;
   box-sizing: border-box;
 
+}
+
+.selector2 + .select2-container {
+  margin-left: 20px; 
+}
+
+/* Cambiar el ancho del select personalizado */
+.select2-container {
+  width: 260px !important;
+   /* importante para sobrescribir estilos inline */
+}
+
+/* Cambiar el fondo del dropdown */
+.select2-container--default .select2-results {
+  background-color: #f0f0f0;
+}
+
+/* Cambiar el estilo del texto seleccionado */
+.select2-selection__rendered {
+  color: #333;
+  font-weight: bold;
+}
+
+/* Cambiar el borde del select */
+.select2-selection {
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
     .select2-container--default .select2-results__option img,
@@ -45,13 +73,6 @@ background-color: rgb(120, 213, 233);
       vertical-align: middle;
 }
 
-#selectorCategoria{
-    width: 300px;
-    height: 30px;
-    border-radius: 3px;
-    text-align: center;
-    background-color: red;
-}
 
 #direccion {
     width: 300px;
@@ -66,6 +87,7 @@ background-color: rgb(120, 213, 233);
     text-align: center;
     width: 100px;
     border-radius: 3px;
+    margin-top: 375px;
 }
 
 /* Sidebar lateral fijo */

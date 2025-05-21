@@ -30,7 +30,7 @@
         <option value="4">Nashville</option>
         <option value="5">Vigo</option>
     </select>
-    <select class="selector" id="selectorCategoria">
+    <select class="selector2" id="selectorCategoria">
         <option value="0" selected disabled>Seleccione una categoría</option>
         <option value="1" data-icon="img/church.png">Iglesia</option>
         <option value="2" data-icon="img/airpark.png">Parque aéreo</option>
@@ -49,22 +49,32 @@
     </select>
 
     <script>
-      $(document).ready(function () {
-        function formatOption(option) {
-          if (!option.id) return option.text;
-          const icon = $(option.element).data('icon');
-          if (icon) {
-            return $(`<span><img src="${icon}" /> ${option.text}</span>`);
-          }
-          return option.text;
-        }
+  $(document).ready(function () {
+    function formatOption(option) {
+      if (!option.id) return option.text;
+      const icon = $(option.element).data('icon');
+      if (icon) {
+        return $(`<span><img src="${icon}" /> ${option.text}</span>`);
+      }
+      return option.text;
+    }
 
-      $('#selectorCategoria').select2({
-        templateResult: formatOption,
-        templateSelection: formatOption,
-        minimumResultsForSearch: -1
-      });
+    // Inicializar Select2
+    $('#selectorCategoria').select2({
+      templateResult: formatOption,
+      templateSelection: formatOption,
+      minimumResultsForSearch: -1
     });
+
+    // Ejemplo: agregar opción nueva dinámicamente
+    $('#addOption').click(function () {
+      // Agrega una nueva opción con su data-icon
+      $('#selectorCategoria').append('<option value="4" data-icon="img/castle.png">Castillo</option>');
+
+      // Actualiza Select2 para que detecte la nueva opción
+      $('#selectorCategoria').trigger('change.select2');
+    });
+  });
   </script>
 
     <div class="botones">
