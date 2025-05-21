@@ -39,3 +39,12 @@ const vigo = [
     { name: "Iglesia de San Miguel de Bouzas", lat: 42.227909607946614, lng: -8.752756120589835 },
     { name: "Museo do Mar de Galicia", lat: 42.22553233410909, lng: -8.7699706809974 },
 ];
+
+  <select class="selector" id="selectorCiudad">
+        <option value="0" selected disabled>Seleccione una localización</option>
+        <option value="1">León</option>
+        <option value="2">Toro</option>
+        <option value="3">San Petersburgo</option>
+        <option value="4">Nashville</option>
+        <option value="5">Vigo</option>
+    </select>

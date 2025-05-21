@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-    
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,10 +9,13 @@
 
     <title>Mapis</title>
 </head>
+
 <body>
 
-    <input type="text" class="input" id="direccion" placeholder="Escribe una localización">
-    
+    <div id="map"></div>
+
+    <div id="sidebar">
+        <input type="text" class="input" id="direccion" placeholder="Escribe una localización">
     <select class="selector" id="selectorCiudad">
         <option value="0" selected disabled>Seleccione una localización</option>
         <option value="1">León</option>
@@ -21,17 +24,38 @@
         <option value="4">Nashville</option>
         <option value="5">Vigo</option>
     </select>
+    </div>
 
-    <div id="map"></div>
+     <div id="contenido">
+  </div>
+
+    <a id="abrir" class="abrir-cerrar" onclick="mostrar()">☰</a>
+    <a id="cerrar" class="abrir-cerrar" onclick="ocultar()">✕</a>
+    <script>
+        function mostrar() {
+            document.getElementById("sidebar").style.width = "300px";
+            document.getElementById("contenido").style.marginLeft = "300px";
+            document.getElementById("abrir").style.display = "none";
+            document.getElementById("cerrar").style.display = "inline";
+        }
+
+        function ocultar() {
+            document.getElementById("sidebar").style.width = "0";
+            document.getElementById("contenido").style.marginLeft = "0";
+            document.getElementById("abrir").style.display = "inline";
+            document.getElementById("cerrar").style.display = "none";
+        }
+    </script>
 
     <div class="botones">
         <button class="btn" id="btnLimpiar">Limpiar mapa</button>
 
-<script async
- src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRK6MM-HR0JEwBe7tOkFhek6XGcxsg3QE&callback=initMap">
-</script>
+        <script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRK6MM-HR0JEwBe7tOkFhek6XGcxsg3QE&callback=initMap">
+            </script>
 
-<script src="js/script.js" async></script>
+        <script src="js/script.js" async></script>
 
 </body>
+
 </html>

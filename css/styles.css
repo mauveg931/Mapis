@@ -4,7 +4,10 @@ width: 80%;
 margin: 10px auto;
 border: solid 4px #000;
 border-radius: 4px;
+margin-top: 30px;
+margin-left: 200px;
 }
+
 html, body {
 height: 100%;
 margin: 0;
@@ -13,29 +16,100 @@ background-color: rgb(120, 213, 233);
 }
 
 .selector{
-width: 100px;
-height: 30px;
-border-radius: 3px;
-margin-left: 30px;
-margin-top: 15px;
-text-align: center;
-background-color: rgb(255, 255, 255);
+ display: block;
+  padding: 10px;
+  width: 100%;
+  max-width: 260px;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+  background-color: #fff;
+  box-sizing: border-box;
 
 }
 
-.input{
-    width: 200px;
-    height: 25px;
-    margin-left: 5px;
+#direccion {
+    width: 300px;
+    height: 30px;
     border-radius: 3px;
     text-align: center;
 }
 
 .btn{
     display: block;
-    margin: 0 auto;
+    margin: 1px auto 0 auto;
     text-align: center;
     width: 100px;
     border-radius: 3px;
-    margin-top: 30px;
 }
+
+/* Sidebar lateral fijo */
+#sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0; 
+  background-color: #f4f4f4;
+  overflow-y: auto; 
+  overflow-x: hidden;
+  transition: width 0.3s ease;
+  padding-top: 60px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+/* Enlaces dentro del sidebar */
+#sidebar a {
+  display: block;
+  padding: 12px 24px;
+  text-decoration: none;
+  color: #333;
+}
+
+#sidebar a:hover {
+  background-color: #ddd;
+}
+
+/* Botones de abrir/cerrar */
+.abrir-cerrar {
+  position: fixed;
+  top: 20px;
+  left: 10px;
+  background-color: #4285f4;
+  color: white;
+  padding: 10px 15px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+/* Botón de cerrar oculto por defecto */
+#cerrar {
+  display: none;
+}
+
+/* Contenedor principal de la página */
+#contenido {
+  margin-left: 0;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+}
+
+/* Estilo del input */
+.input {
+  padding: 10px;
+  width: 100%;
+  max-width: 260px;
+  margin: 20px auto;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: block;
+  text-align: center;
+  box-sizing: border-box;
+}
+
