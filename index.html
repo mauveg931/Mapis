@@ -10,6 +10,8 @@
     <title>Mapis</title>
 </head>
 <body>
+
+    <input type="text" class="input" id="direccion" placeholder="Escribe una localización">
     
     <select class="selector" id="selectorCiudad">
         <option value="0" selected disabled>Seleccione una localización</option>
@@ -21,7 +23,10 @@
     </select>
 
     <div id="map"></div>
-    
+
+    <div class="botones">
+        <button class="btn" id="btnLimpiar">Limpiar mapa</button>
+
 <script async
  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRK6MM-HR0JEwBe7tOkFhek6XGcxsg3QE&callback=initMap">
 </script>

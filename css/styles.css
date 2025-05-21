@@ -22,3 +22,20 @@ text-align: center;
 background-color: rgb(255, 255, 255);
 
 }
+
+.input{
+    width: 200px;
+    height: 25px;
+    margin-left: 5px;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.btn{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    width: 100px;
+    border-radius: 3px;
+    margin-top: 30px;
+}
