@@ -2,10 +2,10 @@
 
 # Mapis
 
-## SESION 1 (20/05/2025)
+## SESION 2 (20/05/2025)
 
 **RESUMEN**
-Empezamos con la creación del index y los lementos básicos, como poder seleccionar 5 ciudades y marcarlas en el mapa
+Empezamos con la creación del index y los elementos básicos, como poder seleccionar 5 ciudades y marcarlas en el mapa
 **DIFICULTADES**
 Desconocíamos que habia que tener una función initMap para poder ejecutar la página web 
 **SOLUCIONES**
@@ -17,3 +17,23 @@ https://developer.mozilla.org/es/
 Usar arrays para almacenar las ciudades y hacer arrays de las ciudades para almacenar los puntos de interés
 **IDEAS DE MEJORA**
 Estética
+
+## SESION 3 (21/05/2025)
+
+**RESUMEN**
+Añadimos los nuevos elementos indicados en la sesión, ponemos los iconos correspondientes a cada categoría, obtenemos las coordenadas a través de la API y añadido del botón de limpiar el mapa.
+**DIFICULTADES**
+La función necesaria para el botón de limpiar el mapa.
+Descubrir qué utilizar para obtener las coordenadas de la ubicación.
+Tras elegir nominatim aprendimos a usarlo.
+Problemas con el cargado de la API de GoogleMaps.
+**SOLUCIONES**
+Especificado anteriormente, pero basicamente usamos el nominatim.
+**FUENTES CONSULTADAS**
+https://developer.mozilla.org/es/
+https://stackoverflow.com/questions
+https://nominatim.org/
+**DECISIONES TÉCNICAS**
+Usar nominatim y el menú desplazable vertical.
+**IDEAS DE MEJORA**
+Estética e iconos.
