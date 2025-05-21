@@ -10,6 +10,7 @@
 
   <!-- Select2 -->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <title>Mapis</title>
@@ -21,7 +22,19 @@
 
     <div id="sidebar">
         <h2 class="tituloSideBar">MAPIS</h2>
-        <input type="text" class="input" id="direccion" placeholder="Escribe una localización">
+        <table>
+            <tr>
+                <th>
+                    <input type="text" class="input" id="direccion" placeholder="Escribe una localización">
+                </th>
+                <th>
+                    <button class="btnBuscar" id="btnBuscar">
+                        <img src="img/lupa.png" alt="Buscar" style="width:20px; height:20px; vertical-align:middle;"/>
+                    </button>
+                </th>
+            </tr>
+        
+        </table>
     <select class="selector" id="selectorCiudad">
         <option value="0" selected disabled>Seleccione una localización</option>
         <option value="1">León</option>
@@ -47,6 +60,8 @@
         <option value="13" data-icon="img/restaurant.png">Restaurante</option>
         <option value="14" data-icon="img/walkingtour.png">Paseo</option>
     </select>
+
+    <div id="lista"></div>
 
     <script>
   $(document).ready(function () {
