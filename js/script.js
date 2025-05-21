@@ -61,8 +61,10 @@ const ciudades = [
 
 
 const selector = document.getElementById("selectorCiudad");
+const btnLimpiar = document.getElementById("btnLimpiar");
 
 var mapaActual;
+const marcadores = [];
 
 function initMap() {
     cambiaMapa(ciudades[0]);
@@ -75,6 +77,10 @@ document.addEventListener("keydown", async function (event) {
     }
 });
 
+btnLimpiar.addEventListener("click", () => {
+    limpiarMarcadores();
+});
+
 
 function addMarker(sitio) {
     let latLng = new google.maps.LatLng(sitio.lat, sitio.lng);
@@ -83,6 +89,14 @@ function addMarker(sitio) {
         title: sitio.name,
         map: mapaActual,
     });
+    marcadores.push(marker);
+}
+
+function limpiarMarcadores(){
+    for(let marcador of marcadores){
+        marcador.setMap(null);
+    }
+    marcadores = [];
 }
 
 function cambiaMapa(sitio) {
