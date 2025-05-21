@@ -1,24 +1,161 @@
 #map {
-height: 80%;
-width: 80%;
-margin: 10px auto;
-border: solid 4px #000;
-border-radius: 4px;
-}
-html, body {
-height: 100%;
-margin: 0;
-padding: 0;
-background-color: rgb(120, 213, 233);
+    height: 100%;
+    width: 100%;
 }
 
-.selector{
-width: 100px;
-height: 30px;
-border-radius: 3px;
-margin-left: 30px;
-margin-top: 15px;
-text-align: center;
-background-color: rgb(255, 255, 255);
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(120, 213, 233);
+}
+
+.tituloSideBar {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.selector {
+    display: block;
+    width: 100%;
+    height: 30px;
+    max-width: 260px;
+    margin: 10px;
+    margin-left: 13px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: left;
+    background-color: #ffffff;
+    box-sizing: border-box;
 
 }
+
+.btnBuscar {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+.selector2+.select2-container {
+    margin-left: 14px;
+}
+
+/* Cambiar el ancho del select personalizado */
+.select2-container {
+    width: 260px !important;
+    /* importante para sobrescribir estilos inline */
+}
+
+/* Cambiar el fondo del dropdown */
+.select2-container--default .select2-results {
+    background-color: #f0f0f0;
+}
+
+/* Cambiar el estilo del texto seleccionado */
+.select2-selection__rendered {
+    color: #333;
+    font-weight: bold;
+}
+
+/* Cambiar el borde del select */
+.select2-selection {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.select2-container--default .select2-results__option img,
+.select2-selection__rendered img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.input {
+    width: 100%;
+    max-width: 260px;
+    margin: 20px auto;
+    display: block;
+    text-align: center;
+    box-sizing: border-box;
+    width: 300px;
+    height: 30px;
+    border-radius: 3px;
+    margin-left: 10px;
+}
+
+
+.btn {
+    display: block;
+    margin: 1px auto 0 auto;
+    text-align: center;
+    width: 100px;
+    border-radius: 3px;
+    margin-top: 375px;
+}
+
+/* Sidebar lateral fijo */
+#sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background-color: #f4f4f4;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: width 0.3s ease;
+    padding-top: 60px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
+/* Enlaces dentro del sidebar */
+#sidebar a {
+    display: block;
+    padding: 12px 24px;
+    text-decoration: none;
+    color: #333;
+}
+
+#sidebar a:hover {
+    background-color: #ddd;
+}
+
+/* Botones de abrir/cerrar */
+.abrir-cerrar {
+    position: fixed;
+    top: 5px;
+    left: 10px;
+    background-color: #4285f4;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1100;
+    margin-left: 220px;
+    height: 3%;
+}
+
+/* Botón de cerrar oculto por defecto */
+#cerrar {
+    display: none;
+}
+
+/* Contenedor principal de la página */
+#contenido {
+    margin-left: 0;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+/* Estilo del input */
