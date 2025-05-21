@@ -61,26 +61,32 @@ const ciudades = [
 
 
 const selector = document.getElementById("selectorCiudad");
-const map = creaMapa(ciudades[0]);
+
+var mapaActual;
 
 function initMap() {
-    let map = creaMapa(ciudades[0]);
+    cambiaMapa(ciudades[0]);
 }
 
-document.addEventListener("DOMContentLoaded", creaMapa(ciudades[0]));
+document.addEventListener("keydown", async function (event) {
+    if (event.key === "Enter") {
+        //btnCalcular.click();
+        await ponMarcadorDireccion();
+    }
+});
 
 
-function addMarker(sitio, map) {
+function addMarker(sitio) {
     let latLng = new google.maps.LatLng(sitio.lat, sitio.lng);
     let marker = new google.maps.Marker({
         position: latLng,
         title: sitio.name,
-        map: map,
+        map: mapaActual,
     });
 }
 
-function creaMapa(sitio) {
-    return new google.maps.Map(document.getElementById("map"), {
+function cambiaMapa(sitio) {
+    mapaActual = new google.maps.Map(document.getElementById("map"), {
         center: { lat: sitio.lat, lng: sitio.lng },
         zoom: sitio.zoom,
     });
@@ -88,14 +94,14 @@ function creaMapa(sitio) {
 
 selector.addEventListener("change", function () {
     let ciudad = ciudades[selector.value];
-    let mapa = creaMapa(ciudad);
+    cambiaMapa(ciudad);
 
     if (ciudad.sitios == null) {
         return;
     }
 
     for (sitio of ciudad.sitios) {
-        addMarker(sitio, mapa);
+        addMarker(sitio, mapaActual);
     }
 
 });
@@ -104,6 +110,52 @@ selector.addEventListener("change", function () {
 
 
 
+
+
+
+
+
+async function ponMarcadorDireccion() {
+    const coord = await buscarCoordenadas();
+
+    if (typeof coord === "string") {
+        alert(coord);
+        return;
+    }
+
+    let sitio = {
+        name: coord.name,
+        lat: parseFloat(coord.lat),
+        lng: parseFloat(coord.lon),
+    }
+    addMarker(sitio);
+
+    if (coord.boundingbox) {
+        const bounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng(parseFloat(coord.boundingbox[0]), parseFloat(coord.boundingbox[2])), // Suroeste
+            new google.maps.LatLng(parseFloat(coord.boundingbox[1]), parseFloat(coord.boundingbox[3]))  // Noreste
+        );
+
+        mapaActual.fitBounds(bounds);
+
+    }
+
+
+}
+
+function mostrar() {
+    document.getElementById("sidebar").style.width = "300px";
+    document.getElementById("contenido").style.marginLeft = "300px";
+    document.getElementById("abrir").style.display = "none";
+    document.getElementById("cerrar").style.display = "inline";
+}
+
+function ocultar() {
+    document.getElementById("sidebar").style.width = "0";
+    document.getElementById("contenido").style.marginLeft = "0";
+    document.getElementById("abrir").style.display = "inline";
+    document.getElementById("cerrar").style.display = "none";
+}
 
 async function buscarCoordenadas() {
     const direccion = document.getElementById("direccion").value;
@@ -125,55 +177,4 @@ async function buscarCoordenadas() {
         console.error("Error al buscar la dirección:", error);
         return "Error en la búsqueda.";
     }
-}
-
-
-document.addEventListener("keydown", async function (event) {
-    if (event.key === "Enter") {
-        //btnCalcular.click();
-        await ponMarcadorDireccion();
-    }
-});
-
-async function ponMarcadorDireccion() {
-    const coord = await buscarCoordenadas();
-
-    if (typeof coord === "string") {
-        alert(coord);
-        return;
-    }
-
-    let sitio = {
-        name: coord.name,
-        lat: parseFloat(coord.lat),
-        lng: parseFloat(coord.lon),
-        zoom: 6,
-    }
-    let mapa = creaMapa(sitio);
-    addMarker(sitio, mapa);
-
-    /**
-     *     if (coord.boundingbox) {
-            const bounds = new google.maps.LatLngBounds(
-                new google.maps.LatLng(parseFloat(coord.boundingbox[0]), parseFloat(coord.boundingbox[2])), // Suroeste
-                new google.maps.LatLng(parseFloat(coord.boundingbox[1]), parseFloat(coord.boundingbox[3]))  // Noreste
-            );
-            mapa.fitBounds(bounds);
-        }
-     */
-
-}
-
-function mostrar() {
-    document.getElementById("sidebar").style.width = "300px";
-    document.getElementById("contenido").style.marginLeft = "300px";
-    document.getElementById("abrir").style.display = "none";
-    document.getElementById("cerrar").style.display = "inline";
-}
-
-function ocultar() {
-    document.getElementById("sidebar").style.width = "0";
-    document.getElementById("contenido").style.marginLeft = "0";
-    document.getElementById("abrir").style.display = "inline";
-    document.getElementById("cerrar").style.display = "none";
 }
