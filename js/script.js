@@ -64,7 +64,7 @@ const selector = document.getElementById("selectorCiudad");
 const btnLimpiar = document.getElementById("btnLimpiar");
 
 var mapaActual;
-const marcadores = [];
+var marcadores = [];
 
 function initMap() {
     cambiaMapa(ciudades[0]);
@@ -79,6 +79,7 @@ document.addEventListener("keydown", async function (event) {
 
 btnLimpiar.addEventListener("click", () => {
     limpiarMarcadores();
+    actualizaListaMarcadores();
 });
 
 
@@ -170,7 +171,7 @@ function actualizaListaMarcadores() {
         const colCat = document.createElement("td");
         const colNombre = document.createElement("td");
         const imgCat = document.createElement("img");
-        imgCat.setAttribute("src", markers[marcador.cat]);
+        imgCat.setAttribute("src", markers[marcador.cat].icon);
 
         colCat.appendChild(imgCat);
         colNombre.innerHTML = marcador.title;
