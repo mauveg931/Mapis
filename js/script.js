@@ -138,15 +138,30 @@ document.addEventListener("keydown", async function (event) {
 async function ponMarcadorDireccion() {
     const coord = await buscarCoordenadas();
 
+    if (typeof coord === "string") {
+        alert(coord);
+        return;
+    }
+
     let sitio = {
         name: coord.name,
         lat: parseFloat(coord.lat),
         lng: parseFloat(coord.lon),
         zoom: 6,
     }
-    alert(sitio.name + sitio.lat + sitio.lng)
     let mapa = creaMapa(sitio);
     addMarker(sitio, mapa);
+
+    /**
+     *     if (coord.boundingbox) {
+            const bounds = new google.maps.LatLngBounds(
+                new google.maps.LatLng(parseFloat(coord.boundingbox[0]), parseFloat(coord.boundingbox[2])), // Suroeste
+                new google.maps.LatLng(parseFloat(coord.boundingbox[1]), parseFloat(coord.boundingbox[3]))  // Noreste
+            );
+            mapa.fitBounds(bounds);
+        }
+     */
+
 }
 
 function mostrar() {
