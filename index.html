@@ -25,19 +25,37 @@
         <option value="4">Nashville</option>
         <option value="5">Vigo</option>
     </select>
+    <select class="selector" id="selectorCategoria">
+        <option value="0" selected disabled>Seleccione una categoría</option>
+        <option value="1">Iglesia</option>
+        <option value="2">Parque aéreo</option>
+        <option value="3">Aeropuerto</option>
+        <option value="4">Castillo</option>
+        <option value="5">Parrilla</option>
+        <option value="6">Estatua/Monumento</option>
+        <option value="7">Hospital</option>
+        <option value="8">Centro Comercial</option>
+        <option value="9">Mirador</option>
+        <option value="10">Museo</option>
+        <option value="11">Palacio</option>
+        <option value="12">Parque</option>
+        <option value="13">Restaurante</option>
+        <option value="14">Paseo</option>
+    </select>
+
     <div class="botones">
         <button class="btn" id="btnLimpiar">Limpiar mapa</button>
     </div>
 
      <div id="contenido">
-  </div>
+    </div>
 
     <a id="abrir" class="abrir-cerrar" onclick="mostrar()">☰</a>
     <a id="cerrar" class="abrir-cerrar" onclick="ocultar()">✕</a>
 
         <script async
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRK6MM-HR0JEwBe7tOkFhek6XGcxsg3QE&callback=initMap">
-            </script>
+        </script>
 
         <script src="js/script.js" async></script>
 

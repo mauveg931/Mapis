@@ -48,3 +48,21 @@ const vigo = [
         <option value="4">Nashville</option>
         <option value="5">Vigo</option>
     </select>
+
+  <select class="selector" id="selectorCategoria"> YA ESTA IMPLEMENTADO EN EL HTML
+        <option value="0" selected disabled>Seleccione una categoría</option>
+        <option value="1">Iglesia</option>
+        <option value="2">Parque aéreo</option>
+        <option value="3">Aeropuerto</option>
+        <option value="4">Castillo</option>
+        <option value="5">Parrilla</option>
+        <option value="6">Estatua/Monumento</option>
+        <option value="7">Hospital</option>
+        <option value="8">Centro Comercial</option>
+        <option value="9">Mirador</option>
+        <option value="10">Museo</option>
+        <option value="11">Palacio</option>
+        <option value="12">Parque</option>
+        <option value="13">Restaurante</option>
+        <option value="14">Paseo</option>
+    </select>
