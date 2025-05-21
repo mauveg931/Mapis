@@ -34,21 +34,6 @@
 
     <a id="abrir" class="abrir-cerrar" onclick="mostrar()">☰</a>
     <a id="cerrar" class="abrir-cerrar" onclick="ocultar()">✕</a>
-    <script>
-        function mostrar() {
-            document.getElementById("sidebar").style.width = "300px";
-            document.getElementById("contenido").style.marginLeft = "300px";
-            document.getElementById("abrir").style.display = "none";
-            document.getElementById("cerrar").style.display = "inline";
-        }
-
-        function ocultar() {
-            document.getElementById("sidebar").style.width = "0";
-            document.getElementById("contenido").style.marginLeft = "0";
-            document.getElementById("abrir").style.display = "inline";
-            document.getElementById("cerrar").style.display = "none";
-        }
-    </script>
 
         <script async
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRK6MM-HR0JEwBe7tOkFhek6XGcxsg3QE&callback=initMap">
