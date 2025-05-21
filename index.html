@@ -15,6 +15,7 @@
     <div id="map"></div>
 
     <div id="sidebar">
+        <h2 class="tituloSideBar">MAPIS</h2>
         <input type="text" class="input" id="direccion" placeholder="Escribe una localización">
     <select class="selector" id="selectorCiudad">
         <option value="0" selected disabled>Seleccione una localización</option>
@@ -24,6 +25,8 @@
         <option value="4">Nashville</option>
         <option value="5">Vigo</option>
     </select>
+    <div class="botones">
+        <button class="btn" id="btnLimpiar">Limpiar mapa</button>
     </div>
 
      <div id="contenido">
@@ -46,9 +49,6 @@
             document.getElementById("cerrar").style.display = "none";
         }
     </script>
-
-    <div class="botones">
-        <button class="btn" id="btnLimpiar">Limpiar mapa</button>
 
         <script async
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRK6MM-HR0JEwBe7tOkFhek6XGcxsg3QE&callback=initMap">
