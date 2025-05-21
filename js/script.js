@@ -1,18 +1,18 @@
 const markers = [
-    { name: "church", icon: 'img/church.png'},
-    { name: "airpark", icon: 'img/airpark.png'},
-    { name: "airport", icon: 'img/airport.png'},
-    { name: "castle", icon: 'img/castle.png'},
-    { name: "chicken", icon: 'img/chicken.png'},
-    { name: "estatua", icon: 'img/estatua.png'},
-    { name: "hospital", icon: 'img/hospital.png'},
-    { name: "mall", icon: 'img/mall.png'},
-    { name: "mirador", icon: 'img/mirador.png'},
-    { name: "museum", icon: 'img/museum.png'},
-    { name: "palace", icon: 'img/palace.png'},
-    { name: "park", icon: 'img/park.png'},
-    { name: "restaurant", icon: 'img/restaurant.png'},
-    { name: "walkingtour", icon: 'img/walkingtour.png'},
+    { name: "church", icon: 'img/church.png' },
+    { name: "airpark", icon: 'img/airpark.png' },
+    { name: "airport", icon: 'img/airport.png' },
+    { name: "castle", icon: 'img/castle.png' },
+    { name: "chicken", icon: 'img/chicken.png' },
+    { name: "estatua", icon: 'img/estatua.png' },
+    { name: "hospital", icon: 'img/hospital.png' },
+    { name: "mall", icon: 'img/mall.png' },
+    { name: "mirador", icon: 'img/mirador.png' },
+    { name: "museum", icon: 'img/museum.png' },
+    { name: "palace", icon: 'img/palace.png' },
+    { name: "park", icon: 'img/park.png' },
+    { name: "restaurant", icon: 'img/restaurant.png' },
+    { name: "walkingtour", icon: 'img/walkingtour.png' },
 ];
 
 const leon = [
@@ -45,28 +45,29 @@ const nashville = [
 
 const vigo = [
     { name: "Parque de Castrelos", lat: 42.214745529842276, lng: -8.730235047744902 },
-    { name: "Castelo do Castro", lat: 42.233181356401815,lng: -8.726710784476142 },
+    { name: "Castelo do Castro", lat: 42.233181356401815, lng: -8.726710784476142 },
     { name: "Iglesia de San Miguel de Bouzas", lat: 42.227909607946614, lng: -8.752756120589835 },
     { name: "Museo do Mar de Galicia", lat: 42.22553233410909, lng: -8.7699706809974 },
 ];
 
 const ciudades = [
-    { name: "Por defecto", lat: 40, lng: -4, zoom: 6.5},
-    { name: "León", lat: 42.59880223930111, lng: -5.572670787573717, zoom: 12.5, sitios: leon},
-    { name: "Toro", lat: 41.52279239477677, lng: -5.3930411014960375, zoom: 13.5, sitios: toro},
-    { name: "San Petersburgo", lat: 59.936765618998884, lng: 30.35364971061799, zoom: 10, sitios: sanpetersburgo},
-    { name: "Nashville", lat: 36.16336090305764, lng: -86.78720688633328, zoom: 12, sitios: nashville},
-    { name: "Vigo", lat: 42.24224453558687, lng: -8.720965458927786, zoom: 13, sitios: vigo},
+    { name: "Por defecto", lat: 40, lng: -4, zoom: 6.5 },
+    { name: "León", lat: 42.59880223930111, lng: -5.572670787573717, zoom: 12.5, sitios: leon },
+    { name: "Toro", lat: 41.52279239477677, lng: -5.3930411014960375, zoom: 13.5, sitios: toro },
+    { name: "San Petersburgo", lat: 59.936765618998884, lng: 30.35364971061799, zoom: 10, sitios: sanpetersburgo },
+    { name: "Nashville", lat: 36.16336090305764, lng: -86.78720688633328, zoom: 12, sitios: nashville },
+    { name: "Vigo", lat: 42.24224453558687, lng: -8.720965458927786, zoom: 13, sitios: vigo },
 ];
 
 
 const selector = document.getElementById("selectorCiudad");
+const map = creaMapa(ciudades[0]);
 
 function initMap() {
     let map = creaMapa(ciudades[0]);
 }
 
-document.addEventListener("DOMContentLoaded",creaMapa(ciudades[0]));
+document.addEventListener("DOMContentLoaded", creaMapa(ciudades[0]));
 
 
 function addMarker(sitio, map) {
@@ -79,22 +80,85 @@ function addMarker(sitio, map) {
 }
 
 function creaMapa(sitio) {
-    return map = new google.maps.Map(document.getElementById("map"), {
+    return new google.maps.Map(document.getElementById("map"), {
         center: { lat: sitio.lat, lng: sitio.lng },
         zoom: sitio.zoom,
     });
 }
 
-selector.addEventListener("change",function(){
+selector.addEventListener("change", function () {
     let ciudad = ciudades[selector.value];
     let mapa = creaMapa(ciudad);
 
-    if(ciudad.sitios==null){
+    if (ciudad.sitios == null) {
         return;
     }
 
-    for(sitio of ciudad.sitios){
+    for (sitio of ciudad.sitios) {
         addMarker(sitio, mapa);
     }
 
 });
+
+
+
+
+
+
+async function buscarCoordenadas() {
+    const direccion = document.getElementById("direccion").value;
+    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(direccion)}&format=json&limit=1`;
+
+    try {
+        const response = await fetch(url, {
+            headers: {
+                "User-Agent": "Mapis/0.2 (hugosv2003@gmail.com)" // Necesario por Nominatim
+            }
+        });
+        const data = await response.json();
+        if (data.length > 0) {
+            return data[0];
+        } else {
+            return "No se encontró la dirección.";
+        }
+    } catch (error) {
+        console.error("Error al buscar la dirección:", error);
+        return "Error en la búsqueda.";
+    }
+}
+
+
+document.addEventListener("keydown", async function (event) {
+    if (event.key === "Enter") {
+        //btnCalcular.click();
+        await ponMarcadorDireccion();
+    }
+});
+
+async function ponMarcadorDireccion() {
+    const coord = await buscarCoordenadas();
+
+    let sitio = {
+        name: coord.name,
+        lat: parseFloat(coord.lat),
+        lng: parseFloat(coord.lon),
+        zoom: 6,
+    }
+    alert(sitio.name + sitio.lat + sitio.lng)
+    let mapa = creaMapa(sitio);
+    addMarker(sitio, mapa);
+}
+
+function mostrar() {
+    document.getElementById("sidebar").style.width = "300px";
+    document.getElementById("contenido").style.marginLeft = "300px";
+    document.getElementById("abrir").style.display = "none";
+    document.getElementById("cerrar").style.display = "inline";
+}
+
+function ocultar() {
+    document.getElementById("sidebar").style.width = "0";
+    document.getElementById("contenido").style.marginLeft = "0";
+    document.getElementById("abrir").style.display = "inline";
+    document.getElementById("cerrar").style.display = "none";
+}
