@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" type="image/x-icon" href="img/favicono.png">
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Select2 -->
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <title>Mapis</title>
 </head>
@@ -27,21 +32,40 @@
     </select>
     <select class="selector" id="selectorCategoria">
         <option value="0" selected disabled>Seleccione una categoría</option>
-        <option value="1">Iglesia</option>
-        <option value="2">Parque aéreo</option>
-        <option value="3">Aeropuerto</option>
-        <option value="4">Castillo</option>
-        <option value="5">Parrilla</option>
-        <option value="6">Estatua/Monumento</option>
-        <option value="7">Hospital</option>
-        <option value="8">Centro Comercial</option>
-        <option value="9">Mirador</option>
-        <option value="10">Museo</option>
-        <option value="11">Palacio</option>
-        <option value="12">Parque</option>
-        <option value="13">Restaurante</option>
-        <option value="14">Paseo</option>
+        <option value="1" data-icon="img/church.png">Iglesia</option>
+        <option value="2" data-icon="img/airpark.png">Parque aéreo</option>
+        <option value="3" data-icon="img/airport.png">Aeropuerto</option>
+        <option value="4" data-icon="img/castle.png">Castillo</option>
+        <option value="5" data-icon="img/chicken.png">Parrilla</option>
+        <option value="6" data-icon="img/estatua.png">Estatua/Monumento</option>
+        <option value="7" data-icon="img/hospital.png">Hospital</option>
+        <option value="8" data-icon="img/mall.png">Centro Comercial</option>
+        <option value="9" data-icon="img/mirador.png">Mirador</option>
+        <option value="10" data-icon="img/museum.png">Museo</option>
+        <option value="11" data-icon="img/palace.png">Palacio</option>
+        <option value="12" data-icon="img/park.png">Parque</option>
+        <option value="13" data-icon="img/restaurant.png">Restaurante</option>
+        <option value="14" data-icon="img/walkingtour.png">Paseo</option>
     </select>
+
+    <script>
+      $(document).ready(function () {
+        function formatOption(option) {
+          if (!option.id) return option.text;
+          const icon = $(option.element).data('icon');
+          if (icon) {
+            return $(`<span><img src="${icon}" /> ${option.text}</span>`);
+          }
+          return option.text;
+        }
+
+      $('#selectorCategoria').select2({
+        templateResult: formatOption,
+        templateSelection: formatOption,
+        minimumResultsForSearch: -1
+      });
+    });
+  </script>
 
     <div class="botones">
         <button class="btn" id="btnLimpiar">Limpiar mapa</button>
