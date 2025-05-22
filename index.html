@@ -2,47 +2,45 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon" type="image/x-icon" href="img/favicono.png">
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/x-icon" href="img/favicono.png">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <!-- Select2 -->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-    <title>Mapis</title>
+  <title>Mapis</title>
 </head>
 
 <body>
 
-    <div id="map"></div>
+  <div id="map"></div>
 
-    <div id="sidebar">
-        <h2 class="tituloSideBar">MAPIS</h2>
-        <table class="tabla">
-            <tr class="fila">
-                <th>
-                    <input type="text" class="input" id="direccion" placeholder="Escribe una localización">
-                </th>
-                <th>
-                    <button class="btnBuscar" id="btnBuscar">
-                        <img src="img/lupa.png" alt="Buscar" style="width:20px; height:20px; vertical-align:middle; left: 10px;"/>
-                    </button>
-                </th>
-            </tr>
-        </table>
-    <select class="selector" id="selectorCiudad">
+
+
+  <div id="sidebar">
+    <h2 class="tituloSideBar">MAPIS</h2>
+
+    <div class="form-container">
+      <div class="input-wrapper">
+        <input type="text" class="input" id="direccion" placeholder="Escribe una localización">
+        <img src="img/lupa.png" alt="Buscar" class="lupa-icon" onclick="document.getElementById('btnBuscar').click();">
+      </div>
+
+      <select class="form-select" id="selectorCiudad">
         <option value="0" selected disabled>Seleccione una localización</option>
         <option value="1">León</option>
         <option value="2">Toro</option>
         <option value="3">San Petersburgo</option>
         <option value="4">Nashville</option>
         <option value="5">Vigo</option>
-    </select>
-    <select class="selector2" id="selectorCategoria">
+      </select>
+
+      <select class="form-select selector2" id="selectorCategoria">
         <option value="0" selected disabled>Seleccione una categoría</option>
         <option value="1" data-icon="img/church.png">Iglesia</option>
         <option value="2" data-icon="img/airpark.png">Parque aéreo</option>
@@ -58,28 +56,26 @@
         <option value="12" data-icon="img/park.png">Parque</option>
         <option value="13" data-icon="img/restaurant.png">Restaurante</option>
         <option value="14" data-icon="img/walkingtour.png">Paseo</option>
-    </select>
+      </select>
 
-    <button class="btnSismo" id="btnAgregar">Mostrar sismos</button>
+      <button class="btnSismo" id="btnSismo">Mostrar sismos</button>
+    </div>
 
     <div id="lista"></div>
 
-    <div class="botones">
-        <button class="btn" id="btnLimpiar">Limpiar mapa</button>
-    </div>
+    <button class="btn" id="btnLimpiar">Limpiar mapa</button>
 
-     <div id="contenido">
-    </div>
+    <div id="contenido"></div>
 
     <a id="cerrar" class="abrir-cerrar" onclick="ocultar()">✕</a>
     <a id="abrir" class="abrir-cerrar" onclick="mostrar()">☰</a>
-    
+  </div>
 
-        <script async
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRK6MM-HR0JEwBe7tOkFhek6XGcxsg3QE&loading=async&callback=initMap">
-        </script>
+  <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRK6MM-HR0JEwBe7tOkFhek6XGcxsg3QE&loading=async&callback=initMap">
+    </script>
 
-        <script src="js/script.js" async></script>
+  <script src="js/script.js" async></script>
 
 </body>
 

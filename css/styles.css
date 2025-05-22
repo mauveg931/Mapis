@@ -17,107 +17,116 @@ body {
     text-align: center;
     margin-bottom: 20px;
     color: #333;
-
 }
 
-.selector {
-    display: block;
+/* Contenedor del formulario centrado */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    height: 30px;
-    max-width: 260px;
-    margin: 10px;
-    margin-left: 13px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    text-align: left;
-    background-color: #ffffff;
-    box-sizing: border-box;
-
 }
 
-.btnBuscar {
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    margin: 0;
-    cursor: pointer;
-}
-
-.btnSismo {
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-left: 10px;
-    margin-top: 20px;
-    display: block;
+/* Input con lupa */
+.input-wrapper {
+    position: relative;
+    width: 260px;
     margin: 10px auto;
 }
 
-.selector2+.select2-container {
-    margin-left: 14px;
-    
-}
-
-/* Cambiar el ancho del select personalizado */
-.select2-container {
-    width: 260px !important;
-    
-    /* importante para sobrescribir estilos inline */
-}
-
-/* Cambiar el fondo del dropdown */
-.select2-container--default .select2-results {
-    background-color: #f0f0f0;
-    
-}
-
-/* Cambiar el estilo del texto seleccionado */
-.select2-selection__rendered {
+.input-wrapper .input {
+    width: 100%;
+    padding-right: 35px;
     font-size: 15px;
-    font-family: arial, sans-serif;
-    text-align: left;
-    
-}
-
-/* Cambiar el borde del select */
-.select2-selection {
+    font-family: 'Arial', sans-serif;
+    height: 35px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    box-sizing: border-box;
 }
 
-.select2-container--default .select2-results__option img,
-.select2-selection__rendered img {
+.lupa-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
     width: 20px;
     height: 20px;
-    margin-right: 10px;
-    vertical-align: middle;
-    
+    cursor: pointer;
 }
 
-.input {
-    width: 100%;
-    max-width: 260px;
-    margin: 20px auto;
-    display: block;
-    text-align: center;
+/* Estilos compartidos por select */
+.form-select {
+    width: 260px;
+    height: 40px;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 10px;
     box-sizing: border-box;
-    width: 300px;
-    height: 30px;
-    border-radius: 3px;
-    margin-left: 10px;
-}
-
-
-.btn {
+    background-color: #ffffff;
+    margin: 10px auto;
     display: block;
-    margin: 1px auto 0 auto;
-    text-align: center;
-    width: 100px;
-    border-radius: 3px;
-    margin-top: 375px;
 }
 
-/* Sidebar lateral fijo */
+/* Ajustes específicos para Select2 */
+.select2-container--default .select2-selection--single {
+    height: 40px !important;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.select2-selection__rendered {
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    line-height: 40px !important;
+    padding-left: 10px !important;
+}
+
+.select2-container {
+    width: 260px !important;
+}
+
+/* Botón Mostrar sismos */
+.btnSismo {
+    width: 260px;
+    height: 35px;
+    font-size: 15px;
+    font-family: 'Arial', sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #e0e0e0;
+    margin: 10px 0;
+}
+
+/* Botón Limpiar mapa al fondo */
+.btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 260px;
+    height: 35px;
+    font-size: 15px;
+    font-family: 'Arial', sans-serif;
+    border-radius: 4px;
+    background-color: #e0e0e0;
+    color: #ff0000;
+    border: 1px solid #ff0000;
+    cursor: pointer;
+}
+.btn:hover {
+    border: 1px solid #ffffff;
+    color: #000000;
+    background-color: red;
+}
+
+/* Sidebar lateral */
 #sidebar {
     position: fixed;
     top: 0;
@@ -135,7 +144,7 @@ body {
     border-radius: 15px;
 }
 
-/* Enlaces dentro del sidebar */
+/* Enlaces del sidebar */
 #sidebar a {
     display: block;
     padding: 12px 24px;
@@ -147,7 +156,7 @@ body {
     background-color: #ddd;
 }
 
-/* Botones de abrir/cerrar */
+/* Botones abrir/cerrar */
 .abrir-cerrar {
     position: fixed;
     top: 8px;
@@ -164,15 +173,12 @@ body {
     height: 2.7%;
 }
 
-/* Botón de cerrar oculto por defecto */
 #cerrar {
     display: none;
 }
 
-/* Contenedor principal de la página */
+/* Contenido desplazable */
 #contenido {
     margin-left: 0;
     transition: margin-left 0.3s ease;
 }
-
-/* Estilo del input */
