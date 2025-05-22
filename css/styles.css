@@ -43,19 +43,32 @@ body {
     cursor: pointer;
 }
 
+.btnSismo {
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+    margin-top: 20px;
+    display: block;
+    margin: 10px auto;
+}
+
 .selector2+.select2-container {
     margin-left: 14px;
+    
 }
 
 /* Cambiar el ancho del select personalizado */
 .select2-container {
     width: 260px !important;
+    
     /* importante para sobrescribir estilos inline */
 }
 
 /* Cambiar el fondo del dropdown */
 .select2-container--default .select2-results {
     background-color: #f0f0f0;
+    
 }
 
 /* Cambiar el estilo del texto seleccionado */
@@ -63,6 +76,7 @@ body {
     font-size: 15px;
     font-family: arial, sans-serif;
     text-align: left;
+    
 }
 
 /* Cambiar el borde del select */
@@ -77,6 +91,7 @@ body {
     height: 20px;
     margin-right: 10px;
     vertical-align: middle;
+    
 }
 
 .input {
@@ -117,6 +132,7 @@ body {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     z-index: 1000;
+    border-radius: 15px;
 }
 
 /* Enlaces dentro del sidebar */
@@ -156,7 +172,6 @@ body {
 /* Contenedor principal de la página */
 #contenido {
     margin-left: 0;
-    padding: 20px;
     transition: margin-left 0.3s ease;
 }
 
