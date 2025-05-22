@@ -223,3 +223,30 @@ async function buscarCoordenadas() {
         return "Error en la búsqueda.";
     }
 }
+
+  $(document).ready(function () {
+    function formatOption(option) {
+      if (!option.id) return option.text;
+      const icon = $(option.element).data('icon');
+      if (icon) {
+        return $(`<span><img src="${icon}" /> ${option.text}</span>`);
+      }
+      return option.text;
+    }
+
+    // Inicializar Select2
+    $('#selectorCategoria').select2({
+      templateResult: formatOption,
+      templateSelection: formatOption,
+      minimumResultsForSearch: -1
+    });
+
+    // Ejemplo: agregar opción nueva dinámicamente
+    $('#addOption').click(function () {
+      // Agrega una nueva opción con su data-icon
+      $('#selectorCategoria').append('<option value="4" data-icon="img/castle.png">Castillo</option>');
+
+      // Actualiza Select2 para que detecte la nueva opción
+      $('#selectorCategoria').trigger('change.select2');
+    });
+  });

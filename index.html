@@ -34,6 +34,8 @@
                 </th>
             </tr>
         </table>
+        <table>
+          <tr>
     <select class="selector" id="selectorCiudad">
         <option value="0" selected disabled>Seleccione una localización</option>
         <option value="1">León</option>
@@ -59,37 +61,9 @@
         <option value="13" data-icon="img/restaurant.png">Restaurante</option>
         <option value="14" data-icon="img/walkingtour.png">Paseo</option>
     </select>
+    </table>
 
     <div id="lista"></div>
-
-    <script>
-  $(document).ready(function () {
-    function formatOption(option) {
-      if (!option.id) return option.text;
-      const icon = $(option.element).data('icon');
-      if (icon) {
-        return $(`<span><img src="${icon}" /> ${option.text}</span>`);
-      }
-      return option.text;
-    }
-
-    // Inicializar Select2
-    $('#selectorCategoria').select2({
-      templateResult: formatOption,
-      templateSelection: formatOption,
-      minimumResultsForSearch: -1
-    });
-
-    // Ejemplo: agregar opción nueva dinámicamente
-    $('#addOption').click(function () {
-      // Agrega una nueva opción con su data-icon
-      $('#selectorCategoria').append('<option value="4" data-icon="img/castle.png">Castillo</option>');
-
-      // Actualiza Select2 para que detecte la nueva opción
-      $('#selectorCategoria').trigger('change.select2');
-    });
-  });
-  </script>
 
     <div class="botones">
         <button class="btn" id="btnLimpiar">Limpiar mapa</button>
@@ -98,8 +72,9 @@
      <div id="contenido">
     </div>
 
-    <a id="abrir" class="abrir-cerrar" onclick="mostrar()">☰</a>
     <a id="cerrar" class="abrir-cerrar" onclick="ocultar()">✕</a>
+    <a id="abrir" class="abrir-cerrar" onclick="mostrar()">☰</a>
+    
 
         <script async
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRK6MM-HR0JEwBe7tOkFhek6XGcxsg3QE&loading=async&callback=initMap">
