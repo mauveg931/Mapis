@@ -62,6 +62,8 @@ const ciudades = [
 
 const selector = document.getElementById("selectorCiudad");
 const btnLimpiar = document.getElementById("btnLimpiar");
+const btnAgregar = document.getElementById("btnAgregar");
+const btnBuscar = document.getElementById("btnBuscar");
 
 var mapaActual;
 var marcadores = [];
@@ -70,18 +72,25 @@ function initMap() {
     cambiaMapa(ciudades[0]);
 }
 
-document.addEventListener("keydown", async function (event) {
-    if (event.key === "Enter") {
-        //btnCalcular.click();
-        await ponMarcadorDireccion();
-    }
-});
 
 btnLimpiar.addEventListener("click", () => {
     limpiarMarcadores();
     actualizaListaMarcadores();
 });
 
+btnAgregar.addEventListener("click", () => {
+    agregarMarcadoresSismos();
+});
+
+btnBuscar.addEventListener("click", async function () {
+        await ponMarcadorDireccion();
+});
+
+document.addEventListener("keydown", async function (event) {
+    if (event.key === "Enter") {
+        btnBuscar.click();
+    }
+});
 
 function addMarker(sitio) {
     let latLng = new google.maps.LatLng(sitio.lat, sitio.lng);
@@ -124,7 +133,35 @@ selector.addEventListener("change", function () {
 
 
 
-
+async function agregarMarcadoresSismos() {
+    const url = 'https://www.ign.es/ign/RssTools/sismologia.xml';
+    try {
+        const response = await fetch(url);
+        const xmlText = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, 'application/xml');
+        const items = xmlDoc.querySelectorAll('item');
+        let added = 0;
+        for (let item of items) {
+            const title = item.querySelector('title')?.textContent || 'Sismo';
+            const geoLat = item.querySelector('geo\\:lat, lat')?.textContent;
+            const geoLong = item.querySelector('geo\\:long, long')?.textContent;
+            if (geoLat && geoLong) {
+                let sitio = {
+                    name: title,
+                    lat: parseFloat(geoLat),
+                    lng: parseFloat(geoLong)
+                };
+                addMarker(sitio);
+                added++;
+            }
+        }
+        actualizaListaMarcadores();
+    } catch (error) {
+        alert('Error al obtener los datos de sismos.');
+        console.error(error);
+    }
+}
 
 
 
@@ -162,7 +199,7 @@ async function ponMarcadorDireccion() {
 function actualizaListaMarcadores() {
     const lista = document.getElementById("lista");
 
-    lista.innerHTML ="";
+    lista.innerHTML = "";
 
     const tabla = document.createElement("table");
 
@@ -224,29 +261,29 @@ async function buscarCoordenadas() {
     }
 }
 
-  $(document).ready(function () {
+$(document).ready(function () {
     function formatOption(option) {
-      if (!option.id) return option.text;
-      const icon = $(option.element).data('icon');
-      if (icon) {
-        return $(`<span><img src="${icon}" /> ${option.text}</span>`);
-      }
-      return option.text;
+        if (!option.id) return option.text;
+        const icon = $(option.element).data('icon');
+        if (icon) {
+            return $(`<span><img src="${icon}" /> ${option.text}</span>`);
+        }
+        return option.text;
     }
 
     // Inicializar Select2
     $('#selectorCategoria').select2({
-      templateResult: formatOption,
-      templateSelection: formatOption,
-      minimumResultsForSearch: -1
+        templateResult: formatOption,
+        templateSelection: formatOption,
+        minimumResultsForSearch: -1
     });
 
     // Ejemplo: agregar opción nueva dinámicamente
     $('#addOption').click(function () {
-      // Agrega una nueva opción con su data-icon
-      $('#selectorCategoria').append('<option value="4" data-icon="img/castle.png">Castillo</option>');
+        // Agrega una nueva opción con su data-icon
+        $('#selectorCategoria').append('<option value="4" data-icon="img/castle.png">Castillo</option>');
 
-      // Actualiza Select2 para que detecte la nueva opción
-      $('#selectorCategoria').trigger('change.select2');
+        // Actualiza Select2 para que detecte la nueva opción
+        $('#selectorCategoria').trigger('change.select2');
     });
-  });
+});
