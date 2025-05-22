@@ -1,4 +1,5 @@
 const markers = [
+    { name: "ubicacion", icon: 'img/Google_Maps_icon.png' },
     { name: "church", icon: 'img/church.png' },
     { name: "airpark", icon: 'img/airpark.png' },
     { name: "airport", icon: 'img/airport.png' },
@@ -62,7 +63,7 @@ const ciudades = [
 
 const selector = document.getElementById("selectorCiudad");
 const btnLimpiar = document.getElementById("btnLimpiar");
-const btnAgregar = document.getElementById("btnAgregar");
+const btnSismo = document.getElementById("btnSismo");
 const btnBuscar = document.getElementById("btnBuscar");
 
 var mapaActual;
@@ -78,7 +79,7 @@ btnLimpiar.addEventListener("click", () => {
     actualizaListaMarcadores();
 });
 
-btnAgregar.addEventListener("click", () => {
+btnSismo.addEventListener("click", () => {
     agregarMarcadoresSismos();
 });
 
@@ -202,6 +203,7 @@ function actualizaListaMarcadores() {
     lista.innerHTML = "";
 
     const tabla = document.createElement("table");
+    tabla.classList.add("listaSitios");
 
     for (let marcador of marcadores) {
         const tr = document.createElement("tr");
