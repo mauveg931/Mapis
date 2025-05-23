@@ -1,4 +1,5 @@
 const markers = [
+    { name: "ubicacion", icon: 'img/Google_Maps_icon.png' },
     { name: "church", icon: 'img/church.png' },
     { name: "airpark", icon: 'img/airpark.png' },
     { name: "airport", icon: 'img/airport.png' },
@@ -62,36 +63,87 @@ const ciudades = [
 
 const selector = document.getElementById("selectorCiudad");
 const btnLimpiar = document.getElementById("btnLimpiar");
+const btnSismo = document.getElementById("btnSismo");
+const btnBuscar = document.getElementById("btnBuscar");
+const mapaEnSi = document.getElementById("map");
+const selectorCategoria = document.getElementById("selectorCategoria");
 
 var mapaActual;
 var marcadores = [];
+var listaCoordenadas = [];
 
 function initMap() {
     cambiaMapa(ciudades[0]);
 }
 
-document.addEventListener("keydown", async function (event) {
-    if (event.key === "Enter") {
-        //btnCalcular.click();
-        await ponMarcadorDireccion();
-    }
-});
 
 btnLimpiar.addEventListener("click", () => {
     limpiarMarcadores();
     actualizaListaMarcadores();
 });
 
+btnSismo.addEventListener("click", () => {
+    agregarMarcadoresSismos();
+});
 
-function addMarker(sitio) {
+btnBuscar.addEventListener("click", async function () {
+    await ponMarcadorDireccion();
+});
+
+mapaEnSi.addEventListener("click", () => {
+    ocultar();
+});
+
+document.addEventListener("keydown", async function (event) {
+    if (event.key === "Enter") {
+        btnBuscar.click();
+    }
+});
+
+
+
+function addMarker(sitio, icono) {
     let latLng = new google.maps.LatLng(sitio.lat, sitio.lng);
-    let marker = new google.maps.Marker({
-        position: latLng,
-        title: sitio.name,
-        map: mapaActual,
-        cat: document.getElementById("selectorCategoria").value,
-    });
+    let latLngBis = { lat: sitio.lat, lng: sitio.lng }
+    let marker;
+
+    if (existeMarcadorEnLatLang(latLngBis)) {
+        return;
+    }
+
+    if (icono != undefined) {
+        marker = new google.maps.Marker({
+            position: latLng,
+            title: sitio.name,
+            map: mapaActual,
+            cat: icono,
+            icon: {
+                url: icono,
+                size: new google.maps.Size(50, 50),
+                anchor: new google.maps.Point(25, 50),
+                scaledSize: new google.maps.Size(40, 45)
+            }
+        });
+    } else {
+        marker = new google.maps.Marker({
+            position: latLng,
+            title: sitio.name,
+            map: mapaActual,
+            cat: markers[0].icon,
+        });
+    }
+
     marcadores.push(marker);
+    listaCoordenadas.push(latLngBis);
+}
+
+function existeMarcadorEnLatLang(latLang) {
+    for (let coordenada of listaCoordenadas) {
+        if (coordenada.lat == latLang.lat && coordenada.lng == latLang.lng) {
+            return true;
+        }
+    }
+    return false;
 }
 
 function limpiarMarcadores() {
@@ -99,6 +151,7 @@ function limpiarMarcadores() {
         marcador.setMap(null);
     }
     marcadores = [];
+    listaCoordenadas = [];
 }
 
 function cambiaMapa(sitio) {
@@ -117,13 +170,68 @@ selector.addEventListener("change", function () {
     }
 
     for (sitio of ciudad.sitios) {
-        addMarker(sitio, mapaActual);
+        addMarker(sitio);
     }
-
+    actualizaListaMarcadores();
 });
 
 
 
+async function agregarMarcadoresSismos() {
+    const url = 'https://www.ign.es/ign/RssTools/sismologia.xml';
+    try {
+        const response = await fetch(url);
+        const xmlText = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, 'application/xml');
+        const items = xmlDoc.querySelectorAll('item');
+        let added = 0;
+
+        for (let item of items) {
+            const fullDescription = item.querySelector('description')?.textContent || 'Sismo';
+
+            // Extraer la ubicación entre "en" y "en la fecha"
+            const match = fullDescription.match(/en\s+(.+?)\s+en la fecha/i);
+            const description = match ? match[1].trim() : fullDescription;
+
+            const geoLat = item.querySelector('geo\\:lat, lat')?.textContent;
+            const geoLong = item.querySelector('geo\\:long, long')?.textContent;
+
+            const magnitudRichterMatch = fullDescription.match(/magnitud\s+([\d.]+)/i);
+            const magnitudRichter = magnitudRichterMatch ? parseFloat(magnitudRichterMatch[1]) : null;
+
+            let iconoEarth = "";
+
+            if(magnitudRichter<3){
+                iconoEarth = "img/earthquake_yellow.png";
+            }else if(magnitudRichter<4){
+                iconoEarth = "img/earthquake_brown.png";
+            }else{
+                iconoEarth = "img/earthquake_red.png";
+            }
+
+
+
+            if (geoLat && geoLong) {
+                let sitio = {
+                    name: description,
+                    lat: parseFloat(geoLat),
+                    lng: parseFloat(geoLong)
+                };
+                addMarker(sitio, iconoEarth);
+                added++;
+            }
+        }
+
+        actualizaListaMarcadores();
+        let coord = {boundingbox: ['27.4335426', '43.9933088', '-18.3936845', '4.5918885']}
+        hacerFocoEn(coord);
+
+    } catch (error) {
+        alert('Error al obtener los datos de sismos.');
+        console.error(error);
+    }
+}
 
 
 
@@ -144,34 +252,45 @@ async function ponMarcadorDireccion() {
         lat: parseFloat(coord.lat),
         lng: parseFloat(coord.lon),
     }
-    addMarker(sitio);
 
-    if (coord.boundingbox) {
-        const bounds = new google.maps.LatLngBounds(
-            new google.maps.LatLng(parseFloat(coord.boundingbox[0]), parseFloat(coord.boundingbox[2])), // Suroeste
-            new google.maps.LatLng(parseFloat(coord.boundingbox[1]), parseFloat(coord.boundingbox[3]))  // Noreste
-        );
-
-        mapaActual.fitBounds(bounds);
-
+    if (selectorCategoria.value == 0) {
+        addMarker(sitio);
+    } else {
+        addMarker(sitio, markers[selectorCategoria.value].icon);
     }
 
+
+    if (coord.boundingbox) {
+        await hacerFocoEn(coord);
+    }
     actualizaListaMarcadores();
+}
+
+async function hacerFocoEn(coord) {
+    const bounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(parseFloat(coord.boundingbox[0]), parseFloat(coord.boundingbox[2])), // Suroeste
+        new google.maps.LatLng(parseFloat(coord.boundingbox[1]), parseFloat(coord.boundingbox[3]))  // Noreste
+    );
+
+    mapaActual.fitBounds(bounds);
 }
 
 function actualizaListaMarcadores() {
     const lista = document.getElementById("lista");
 
-    lista.innerHTML ="";
+    lista.innerHTML = "";
 
     const tabla = document.createElement("table");
+    tabla.classList.add("listaSitios");
 
     for (let marcador of marcadores) {
         const tr = document.createElement("tr");
+        tr.classList.add("filaLista");
+
         const colCat = document.createElement("td");
         const colNombre = document.createElement("td");
         const imgCat = document.createElement("img");
-        imgCat.setAttribute("src", markers[marcador.cat].icon);
+        imgCat.setAttribute("src", marcador.cat);
 
         colCat.appendChild(imgCat);
         colNombre.innerHTML = marcador.title;
@@ -185,6 +304,7 @@ function actualizaListaMarcadores() {
 
 
     lista.appendChild(tabla);
+
 
 }
 
@@ -223,3 +343,30 @@ async function buscarCoordenadas() {
         return "Error en la búsqueda.";
     }
 }
+
+$(document).ready(function () {
+    function formatOption(option) {
+        if (!option.id) return option.text;
+        const icon = $(option.element).data('icon');
+        if (icon) {
+            return $(`<span><img src="${icon}" /> ${option.text}</span>`);
+        }
+        return option.text;
+    }
+
+    // Inicializar Select2
+    $('#selectorCategoria').select2({
+        templateResult: formatOption,
+        templateSelection: formatOption,
+        minimumResultsForSearch: -1
+    });
+
+    // Ejemplo: agregar opción nueva dinámicamente
+    $('#addOption').click(function () {
+        // Agrega una nueva opción con su data-icon
+        $('#selectorCategoria').append('<option value="4" data-icon="img/castle.png">Castillo</option>');
+
+        // Actualiza Select2 para que detecte la nueva opción
+        $('#selectorCategoria').trigger('change.select2');
+    });
+});

@@ -66,3 +66,36 @@ const vigo = [
         <option value="13">Restaurante</option>
         <option value="14">Paseo</option>
     </select>
+
+async function agregarMarcadoresSismos() {
+    const url = 'https://www.ign.es/ign/RssTools/sismologia.xml';
+    try {
+        const response = await fetch(url);
+        const xmlText = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlText, 'application/xml');
+        const items = xmlDoc.querySelectorAll('item');
+        let added = 0;
+        for (let item of items) {
+            const description = item.querySelector('description')?.textContent || 'Sismo';
+            const geoLat = item.querySelector('geo\\:lat, lat')?.textContent;
+            const geoLong = item.querySelector('geo\\:long, long')?.textContent;
+            if (geoLat && geoLong) {
+                let ubicacionMatch = description.match(/Sismo localizado\s+([A-Z]{1,3}\s[^\d\(]+)/i);
+                let ubicacion = ubicacionMatch ? ubicacionMatch[1].trim() : description;
+
+                let sitio = {
+                    name: description,
+                    lat: parseFloat(geoLat),
+                    lng: parseFloat(geoLong)
+                };
+                addMarker(sitio);
+                added++;
+            }
+        }
+        actualizaListaMarcadores();
+    } catch (error) {
+        alert('Error al obtener los datos de sismos.');
+        console.error(error);
+    }
+}
