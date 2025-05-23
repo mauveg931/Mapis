@@ -66,6 +66,7 @@ const btnLimpiar = document.getElementById("btnLimpiar");
 const btnSismo = document.getElementById("btnSismo");
 const btnBuscar = document.getElementById("btnBuscar");
 const mapaEnSi = document.getElementById("map");
+const selectorCategoria = document.getElementById("selectorCategoria");
 
 var mapaActual;
 var marcadores = [];
@@ -98,20 +99,51 @@ document.addEventListener("keydown", async function (event) {
     }
 });
 
-function addMarker(sitio) {
+function addMarker(sitio, icono) {
     let latLng = new google.maps.LatLng(sitio.lat, sitio.lng);
-    let marker = new google.maps.Marker({
-        position: latLng,
-        title: sitio.name,
-        map: mapaActual,
-        icon: {
-            url: markers[document.getElementById("selectorCategoria").value].icon,
-            size: new google.maps.Size(50, 50),
-            anchor: new google.maps.Point(25, 50),
-            scaledSize: new google.maps.Size(50, 50)
-        }
-    });
+    let marker;
+
+    if(existeMarcadorEnLatLang(latLng)){
+        return;
+    }
+
+    if (icono != undefined) {
+        marker = new google.maps.Marker({
+            position: latLng,
+            title: sitio.name,
+            map: mapaActual,
+            cat: markers[selectorCategoria.value].icon,
+            icon: {
+                url: icono,
+                size: new google.maps.Size(50, 50),
+                anchor: new google.maps.Point(25, 50),
+                scaledSize: new google.maps.Size(50, 50)
+            }
+        });
+    } else {
+        marker = new google.maps.Marker({
+            position: latLng,
+            title: sitio.name,
+            map: mapaActual,
+            cat: markers[0].icon,
+        });
+    }
+
     marcadores.push(marker);
+}
+
+function existeMarcadorEnLatLang(latLng){
+    for(let marcador of marcadores){
+
+        alert(latLng)
+        alert(marcador.position)
+
+        if(marcador.position == latLng){
+            alert("obedcabr")
+            return true;
+        }
+    }
+    return false;
 }
 
 function limpiarMarcadores() {
@@ -137,7 +169,7 @@ selector.addEventListener("change", function () {
     }
 
     for (sitio of ciudad.sitios) {
-        addMarker(sitio, mapaActual);
+        addMarker(sitio);
     }
 
 });
@@ -192,7 +224,13 @@ async function ponMarcadorDireccion() {
         lat: parseFloat(coord.lat),
         lng: parseFloat(coord.lon),
     }
-    addMarker(sitio);
+
+    if(selectorCategoria.value==0){
+        addMarker(sitio);
+    }else{
+        addMarker(sitio, markers[selectorCategoria.value].icon);
+    }
+ 
 
     if (coord.boundingbox) {
         const bounds = new google.maps.LatLngBounds(
@@ -220,7 +258,7 @@ function actualizaListaMarcadores() {
         const colCat = document.createElement("td");
         const colNombre = document.createElement("td");
         const imgCat = document.createElement("img");
-        imgCat.setAttribute("src", marcador.icon.url);
+        imgCat.setAttribute("src", marcador.cat);
 
         colCat.appendChild(imgCat);
         colNombre.innerHTML = marcador.title;
