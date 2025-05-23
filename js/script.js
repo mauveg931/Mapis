@@ -135,9 +135,6 @@ function addMarker(sitio, icono) {
 function existeMarcadorEnLatLang(latLng){
     for(let marcador of marcadores){
 
-        alert(latLng)
-        alert(marcador.position)
-
         if(marcador.position == latLng){
             alert("obedcabr")
             return true;
@@ -176,7 +173,7 @@ selector.addEventListener("change", function () {
 
 
 
-async function agregarMarcadoresSismos() {
+    async function agregarMarcadoresSismos() {
     const url = 'https://www.ign.es/ign/RssTools/sismologia.xml';
     try {
         const response = await fetch(url);
@@ -186,12 +183,15 @@ async function agregarMarcadoresSismos() {
         const items = xmlDoc.querySelectorAll('item');
         let added = 0;
         for (let item of items) {
-            const title = item.querySelector('title')?.textContent || 'Sismo';
+            const description = item.querySelector('description')?.textContent || 'Sismo';
             const geoLat = item.querySelector('geo\\:lat, lat')?.textContent;
             const geoLong = item.querySelector('geo\\:long, long')?.textContent;
             if (geoLat && geoLong) {
+                let ubicacion = description.match(/Sismo localizado\s(.+?)(?:\(|$)/i); //edited by Obed
+                ubicacion = ubicacion ? ubicacion[1].trim() : description;
+
                 let sitio = {
-                    name: title,
+                    name: description,
                     lat: parseFloat(geoLat),
                     lng: parseFloat(geoLong)
                 };
