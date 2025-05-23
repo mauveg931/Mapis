@@ -37,3 +37,27 @@ https://nominatim.org/
 Usar nominatim y el menú desplazable vertical.
 **IDEAS DE MEJORA**
 Estética e iconos.
+
+## SESION 4 (23/05/2025)
+
+**RESUMEN**
+Mostrar el mapa que permita mostrar las localizaciones obtenidas.
+**DIFICULTADES**
+Dificultad con los iconoes, problemas al insertarlos, no eran del mismo tamaño.
+Información del terremoto.
+Problemas de comunicación dentro del equipo.
+**SOLUCIONES**
+Ajuste del tamaño de iconos en la web.
+**FUENTES CONSULTADAS**
+https://developer.mozilla.org/es/
+https://stackoverflow.com/questions
+https://nominatim.org/
+https://www.ign.es/ign/RssTools/sismologia.xml
+https://developers.google.com/maps?hl=es-419
+https://www.w3schools.com/js/default.asp
+
+**DECISIONES TÉCNICAS**
+Romper, destruir y volver a crear.
+Iconos asignados correctamente.
+**IDEAS DE MEJORA**
+Dejarlo más bonito.
