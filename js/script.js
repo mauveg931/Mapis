@@ -116,7 +116,7 @@ function addMarker(sitio, icono) {
             position: latLng,
             title: sitio.name,
             map: mapaActual,
-            cat: markers[selectorCategoria.value].icon,
+            cat: icono,
             icon: {
                 url: icono,
                 size: new google.maps.Size(50, 50),
