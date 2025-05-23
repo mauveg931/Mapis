@@ -67,7 +67,7 @@ const vigo = [
         <option value="14">Paseo</option>
     </select>
 
-    async function agregarMarcadoresSismos() {
+async function agregarMarcadoresSismos() {
     const url = 'https://www.ign.es/ign/RssTools/sismologia.xml';
     try {
         const response = await fetch(url);
@@ -77,12 +77,12 @@ const vigo = [
         const items = xmlDoc.querySelectorAll('item');
         let added = 0;
         for (let item of items) {
-            const title = item.querySelector('description')?.textContent || 'Sismo';
+            const description = item.querySelector('description')?.textContent || 'Sismo';
             const geoLat = item.querySelector('geo\\:lat, lat')?.textContent;
             const geoLong = item.querySelector('geo\\:long, long')?.textContent;
             if (geoLat && geoLong) {
-                let ubicacion = description.match(/Sismo localizado\s(.+?)(?:\(|$)/i); //edited by Obed
-                ubicacion = ubicacion ? ubicacion[1].trim() : description;
+                let ubicacionMatch = description.match(/Sismo localizado\s+([A-Z]{1,3}\s[^\d\(]+)/i);
+                let ubicacion = ubicacionMatch ? ubicacionMatch[1].trim() : description;
 
                 let sitio = {
                     name: description,
@@ -91,12 +91,6 @@ const vigo = [
                 };
                 addMarker(sitio);
                 added++;
-
-                if (listaUbicaciones) { // edited by Obed
-                    const li = document.createElement('li');
-                    li.textContent = ubicacion;
-                    listaUbicaciones.appendChild(li);
-                }
             }
         }
         actualizaListaMarcadores();
