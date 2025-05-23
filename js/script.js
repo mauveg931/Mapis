@@ -65,6 +65,7 @@ const selector = document.getElementById("selectorCiudad");
 const btnLimpiar = document.getElementById("btnLimpiar");
 const btnSismo = document.getElementById("btnSismo");
 const btnBuscar = document.getElementById("btnBuscar");
+const mapaEnSi = document.getElementById("map");
 
 var mapaActual;
 var marcadores = [];
@@ -84,7 +85,11 @@ btnSismo.addEventListener("click", () => {
 });
 
 btnBuscar.addEventListener("click", async function () {
-        await ponMarcadorDireccion();
+    await ponMarcadorDireccion();
+});
+
+mapaEnSi.addEventListener("click", () => {
+    ocultar();
 });
 
 document.addEventListener("keydown", async function (event) {
@@ -99,7 +104,12 @@ function addMarker(sitio) {
         position: latLng,
         title: sitio.name,
         map: mapaActual,
-        cat: document.getElementById("selectorCategoria").value,
+        icon: {
+            url: markers[document.getElementById("selectorCategoria").value].icon,
+            size: new google.maps.Size(50, 50),
+            anchor: new google.maps.Point(25, 50),
+            scaledSize: new google.maps.Size(50, 50)
+        }
     });
     marcadores.push(marker);
 }
@@ -210,7 +220,7 @@ function actualizaListaMarcadores() {
         const colCat = document.createElement("td");
         const colNombre = document.createElement("td");
         const imgCat = document.createElement("img");
-        imgCat.setAttribute("src", markers[marcador.cat].icon);
+        imgCat.setAttribute("src", marcador.icon.url);
 
         colCat.appendChild(imgCat);
         colNombre.innerHTML = marcador.title;
