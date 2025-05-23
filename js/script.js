@@ -103,7 +103,7 @@ function addMarker(sitio, icono) {
     let latLng = new google.maps.LatLng(sitio.lat, sitio.lng);
     let marker;
 
-    if(existeMarcadorEnLatLang(latLng)){
+    if(existeMarcadorEnLatLang(sitio)){
         return;
     }
 
@@ -113,6 +113,8 @@ function addMarker(sitio, icono) {
             title: sitio.name,
             map: mapaActual,
             cat: markers[selectorCategoria.value].icon,
+            latxd:sitio.lat,
+            lngxd:sitio.lng,
             icon: {
                 url: icono,
                 size: new google.maps.Size(50, 50),
@@ -132,10 +134,10 @@ function addMarker(sitio, icono) {
     marcadores.push(marker);
 }
 
-function existeMarcadorEnLatLang(latLng){
+function existeMarcadorEnLatLang(sitio){
     for(let marcador of marcadores){
 
-        if(marcador.position == latLng){
+        if(sitio.lat == marcador.latxd && sitio.lng == marcador.lngxd){
             alert("obedcabr")
             return true;
         }
@@ -173,7 +175,7 @@ selector.addEventListener("change", function () {
 
 
 
-    async function agregarMarcadoresSismos() {
+async function agregarMarcadoresSismos() {
     const url = 'https://www.ign.es/ign/RssTools/sismologia.xml';
     try {
         const response = await fetch(url);
@@ -187,8 +189,8 @@ selector.addEventListener("change", function () {
             const geoLat = item.querySelector('geo\\:lat, lat')?.textContent;
             const geoLong = item.querySelector('geo\\:long, long')?.textContent;
             if (geoLat && geoLong) {
-                let ubicacion = description.match(/Sismo localizado\s(.+?)(?:\(|$)/i); //edited by Obed
-                ubicacion = ubicacion ? ubicacion[1].trim() : description;
+                let ubicacionMatch = description.match(/Sismo localizado\s+([A-Z]{1,3}\s[^\d\(]+)/i);
+                let ubicacion = ubicacionMatch ? ubicacionMatch[1].trim() : description;
 
                 let sitio = {
                     name: description,
