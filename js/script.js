@@ -175,6 +175,9 @@ selector.addEventListener("change", function () {
 
 
 
+
+
+
 async function agregarMarcadoresSismos() {
     const url = 'https://www.ign.es/ign/RssTools/sismologia.xml';
     try {
@@ -184,14 +187,18 @@ async function agregarMarcadoresSismos() {
         const xmlDoc = parser.parseFromString(xmlText, 'application/xml');
         const items = xmlDoc.querySelectorAll('item');
         let added = 0;
+
         for (let item of items) {
-            const description = item.querySelector('description')?.textContent || 'Sismo';
+            const fullDescription = item.querySelector('description')?.textContent || 'Sismo';
+
+            // Extraer la ubicación entre "en" y "en la fecha"
+            const match = fullDescription.match(/en\s+(.+?)\s+en la fecha/i);
+            const description = match ? match[1].trim() : fullDescription;
+
             const geoLat = item.querySelector('geo\\:lat, lat')?.textContent;
             const geoLong = item.querySelector('geo\\:long, long')?.textContent;
-            if (geoLat && geoLong) {
-                let ubicacionMatch = description.match(/Sismo localizado\s+([A-Z]{1,3}\s[^\d\(]+)/i);
-                let ubicacion = ubicacionMatch ? ubicacionMatch[1].trim() : description;
 
+            if (geoLat && geoLong) {
                 let sitio = {
                     name: description,
                     lat: parseFloat(geoLat),
@@ -201,12 +208,14 @@ async function agregarMarcadoresSismos() {
                 added++;
             }
         }
+
         actualizaListaMarcadores();
     } catch (error) {
         alert('Error al obtener los datos de sismos.');
         console.error(error);
     }
 }
+
 
 
 
