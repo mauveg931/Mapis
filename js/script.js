@@ -17,38 +17,38 @@ const markers = [
 ];
 
 const leon = [
-    { name: "Catedral", lat: 42.5994603360669, lng: -5.5671718763307085 },
-    { name: "Hospital Universitario Monte San Isidro", lat: 42.639469898018476, lng: -5.593990658634236 },
-    { name: "Espacio León", lat: 42.61397398195876, lng: -5.5957198594532445 },
-    { name: "Basílica de San Isidoro", lat: 42.601350001587875, lng: -5.570845043345689 },
+    { name: "Catedral de León", lat: 42.5994603360669, lng: -5.5671718763307085, cat: "church" },
+    { name: "Hospital Universitario Monte San Isidro", lat: 42.639469898018476, lng: -5.593990658634236, cat: "hospital" },
+    { name: "Espacio León", lat: 42.61397398195876, lng: -5.5957198594532445, cat: "mall" },
+    { name: "Basílica de San Isidoro", lat: 42.601350001587875, lng: -5.570845043345689, cat: "church" },
 ];
 
 const toro = [
-    { name: "Alcázar de Toro", lat: 41.51998732265016, lng: -5.392119666731056 },
-    { name: "Paseo del Espolón", lat: 41.5171275319311, lng: -5.394994994529564 },
-    { name: "Mirador El banco de Toro", lat: 41.517591220401755, lng: -5.411359370578888 },
-    { name: "Monumento a la Batalla de Toro", lat: 41.50705075133617, lng: -5.406638682379866 },
+    { name: "Alcázar de Toro", lat: 41.51998732265016, lng: -5.392119666731056, cat: "castle" },
+    { name: "Paseo del Espolón", lat: 41.5171275319311, lng: -5.394994994529564, cat: "walkingtour" },
+    { name: "Mirador El banco de Toro", lat: 41.517591220401755, lng: -5.411359370578888, cat: "mirador" },
+    { name: "Monumento a la Batalla de Toro", lat: 41.50705075133617, lng: -5.406638682379866, cat: "estatua" },
 ];
 
 const sanpetersburgo = [
-    { name: "Lyubashinsky Garden", lat: 59.97293618701417, lng: 30.397908507044125 },
-    { name: "Palacio de Invierno", lat: 59.94813375697961, lng: 30.311729901713647 },
-    { name: "Aeropuerto Internacional Púlkovo", lat: 59.81064906257848, lng: 30.268471236369663 },
-    { name: "Palacio de Catalina", lat: 59.732523017946036, lng: 30.394127362714542 },
+    { name: "Lyubashinsky Garden", lat: 59.97293618701417, lng: 30.397908507044125, cat: "park" },
+    { name: "Palacio de Invierno", lat: 59.94813375697961, lng: 30.311729901713647, cat: "palace" },
+    { name: "Aeropuerto Internacional Púlkovo", lat: 59.81064906257848, lng: 30.268471236369663, cat: "airport" },
+    { name: "Palacio de Catalina", lat: 59.732523017946036, lng: 30.394127362714542, cat: "palace" },
 ];
 
 const nashville = [
-    { name: "Lane Motor Museum", lat: 36.145203677234875, lng: -86.73553682128426 },
-    { name: "Cornelia Fort Airpark at Shelby Bottoms", lat: 36.195900436583194, lng: -86.70385437579058 },
-    { name: "Aeropuerto Internacional de Nashville", lat: 36.129514010513674, lng: -86.67550074833615 },
-    { name: "Hattie B's Hot Chicken - Nashville - Midtown", lat: 36.15441062753463, lng: -86.79686545557149 },
+    { name: "Lane Motor Museum", lat: 36.145203677234875, lng: -86.73553682128426, cat: "museum" },
+    { name: "Cornelia Fort Airpark at Shelby Bottoms", lat: 36.195900436583194, lng: -86.70385437579058, cat: "airpark" },
+    { name: "Aeropuerto Internacional de Nashville", lat: 36.129514010513674, lng: -86.67550074833615, cat: "airport" },
+    { name: "Hattie B's Hot Chicken - Nashville - Midtown", lat: 36.15441062753463, lng: -86.79686545557149, cat: "chicken" },
 ];
 
 const vigo = [
-    { name: "Parque de Castrelos", lat: 42.214745529842276, lng: -8.730235047744902 },
-    { name: "Castelo do Castro", lat: 42.233181356401815, lng: -8.726710784476142 },
-    { name: "Iglesia de San Miguel de Bouzas", lat: 42.227909607946614, lng: -8.752756120589835 },
-    { name: "Museo do Mar de Galicia", lat: 42.22553233410909, lng: -8.7699706809974 },
+    { name: "Parque de Castrelos", lat: 42.214745529842276, lng: -8.730235047744902, cat: "park" },
+    { name: "Castelo do Castro", lat: 42.233181356401815, lng: -8.726710784476142, cat: "castle" },
+    { name: "Iglesia de San Miguel de Bouzas", lat: 42.227909607946614, lng: -8.752756120589835, cat: "church" },
+    { name: "Museo do Mar de Galicia", lat: 42.22553233410909, lng: -8.7699706809974, cat: "museum" },
 ];
 
 const ciudades = [
@@ -163,18 +163,35 @@ function cambiaMapa(sitio) {
 
 selector.addEventListener("change", function () {
     let ciudad = ciudades[selector.value];
-    cambiaMapa(ciudad);
+    cambiarPosicion(ciudad);
 
     if (ciudad.sitios == null) {
         return;
     }
 
     for (sitio of ciudad.sitios) {
-        addMarker(sitio);
+
+        let icono = obtenerIconoSitio(sitio.cat);
+
+
+        addMarker(sitio, icono);
     }
     actualizaListaMarcadores();
 });
 
+function cambiarPosicion(sitio) {
+    mapaActual.setCenter({ lat: sitio.lat, lng: sitio.lng }); // Madrid
+    mapaActual.setZoom(sitio.zoom);
+}
+
+function obtenerIconoSitio(categoria) {
+    for (let cat of markers) {
+        if (cat.name == categoria) {
+            return cat.icon;
+        }
+    }
+    return undefined;
+}
 
 
 async function agregarMarcadoresSismos() {
@@ -202,11 +219,11 @@ async function agregarMarcadoresSismos() {
 
             let iconoEarth = "";
 
-            if(magnitudRichter<3){
+            if (magnitudRichter < 3) {
                 iconoEarth = "img/earthquake_yellow.png";
-            }else if(magnitudRichter<4){
+            } else if (magnitudRichter < 4) {
                 iconoEarth = "img/earthquake_brown.png";
-            }else{
+            } else {
                 iconoEarth = "img/earthquake_red.png";
             }
 
@@ -224,7 +241,7 @@ async function agregarMarcadoresSismos() {
         }
 
         actualizaListaMarcadores();
-        let coord = {boundingbox: ['27.4335426', '43.9933088', '-18.3936845', '4.5918885']}
+        let coord = { boundingbox: ['27.4335426', '43.9933088', '-18.3936845', '4.5918885'] }
         hacerFocoEn(coord);
 
     } catch (error) {
